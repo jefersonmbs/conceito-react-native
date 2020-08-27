@@ -13,28 +13,28 @@ import api from "./services/api";
 
 export default function App() {
 
-  const [repositories, setRepositories] = useState([]);
+  const [repositorys, setrepositorys] = useState([]);
 
   useEffect(() => {
     api.get('repositories').then(response => {
       console.log(response.data);
-      setRepositories(response.data);
+      setrepositorys(response.data);
     })
   }, [])
 
   async function handleLikeRepository(id) {
     const response = await api.post(`repositories/${id}/like`).then(response => response.data.likes)
-    const newArray = [...repositories];
-    const index = newArray.findIndex(repo => repo.id === id);
-    newArray[index].likes = response;
-    setRepositories(newArray);
+    const newRepositorys = [...repositorys];
+    const index = newRepositorys.findIndex(repo => repo.id === id);
+    newRepositorys[index].likes = response;
+    setrepositorys(newRepositorys);
   }
 
   return (
       <>
         <StatusBar barStyle="light-content" backgroundColor="#7159c1" />
         <SafeAreaView style={styles.container}>
-          {repositories.map(repository => (
+          {repositorys.map(repository => (
               <View key={repository.id} style={styles.repositoryContainer}>
                 <Text style={styles.repository}>{repository.title}</Text>
 
